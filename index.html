@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delight Library — Delight, Arkansas</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8392B;
+    --teal: #2A7A78;
+    --yellow: #F2B84B;
+    --orange: #E07A3A;
+    --cream: #FDF6E3;
+    --sage: #7A9E6E;
+    --sky: #5BAFC4;
+    --text: #3A2E1E;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(253,246,227,0.94); backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--yellow);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 2.5rem; gap: 1rem;
+  }
+  .nav-logo { display: flex; align-items: baseline; gap: 0.3rem; text-decoration: none; }
+  .nav-logo .script { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--red); line-height: 1; }
+  .nav-logo .serif  { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal); font-weight: 700; letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+  .nav-links a { text-decoration: none; font-weight: 700; font-size: 0.82rem; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; position: relative; transition: color 0.2s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--orange); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--red); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-hours { font-size: 0.74rem; font-weight: 700; color: var(--orange); text-align: right; line-height: 1.5; flex-shrink: 0; }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 92vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem 3rem; overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(242,184,75,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, rgba(91,175,196,0.15) 0%, transparent 50%),
+      var(--cream);
+  }
+  .hero-deco {
+    position: absolute; pointer-events: none; user-select: none;
+    animation: float 6s ease-in-out infinite; opacity: 0.6;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    33%      { transform: translateY(-9px) rotate(4deg); }
+    66%      { transform: translateY(5px) rotate(-3deg); }
+  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(18px);  } to { opacity:1; transform:translateY(0); } }
+
+  .hero-badge {
+    display: inline-block; background: var(--teal); color: white;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.35rem 1.1rem; border-radius: 999px; margin-bottom: 1.2rem;
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero h1 { line-height: 1; margin-bottom: 0.4rem; animation: fadeDown 0.7s 0.1s ease both; }
+  .hero h1 .script-line {
+    display: block; font-family: 'Dancing Script', cursive;
+    font-size: clamp(4.5rem, 13vw, 9rem); color: var(--red);
+    line-height: 1.05; text-shadow: 3px 4px 0 rgba(200,57,43,0.1);
+  }
+  .hero h1 .serif-line {
+    display: block; font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem); color: var(--teal);
+    font-weight: 700; letter-spacing: 0.08em; line-height: 1;
+  }
+  .hero-tagline { margin-top: 1.2rem; font-size: clamp(1rem, 2.2vw, 1.2rem); color: var(--orange); font-weight: 700; font-style: italic; animation: fadeUp 0.7s 0.3s ease both; }
+  .hero-sub { margin-top: 0.6rem; font-size: 0.95rem; color: #6A5A3A; max-width: 460px; line-height: 1.65; animation: fadeUp 0.7s 0.45s ease both; }
+  .hero-ctas { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.7s 0.55s ease both; }
+  .btn-primary {
+    background: var(--red); color: white; border: none;
+    padding: 0.85rem 2rem; border-radius: 999px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    box-shadow: 0 4px 14px rgba(200,57,43,0.3); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,57,43,0.4); }
+  .btn-secondary {
+    background: transparent; color: var(--teal); border: 2.5px solid var(--teal);
+    padding: 0.85rem 2rem; border-radius: 999px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { background: var(--teal); color: white; }
+  .hero-hours-pill {
+    margin-top: 1.8rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(42,122,120,0.1); border: 1.5px solid rgba(42,122,120,0.3);
+    border-radius: 999px; padding: 0.5rem 1.2rem;
+    font-size: 0.82rem; font-weight: 700; color: var(--teal);
+    animation: fadeUp 0.7s 0.65s ease both;
+  }
+
+  /* DIVIDER */
+  .wavy { width: 100%; overflow: hidden; line-height: 0; margin-top: -1px; }
+
+  /* SECTIONS */
+  .section { padding: 5rem 2rem; position: relative; }
+  .section-label { text-align: center; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.5rem; }
+  .section-title { text-align: center; font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 5vw, 3rem); color: var(--red); margin-bottom: 0.5rem; }
+  .section-sub { text-align: center; color: #6A5A3A; font-size: 0.97rem; max-width: 520px; margin: 0 auto 3rem; line-height: 1.65; }
+
+  /* CARDS */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.4rem; max-width: 1100px; margin: 0 auto; }
+  .card {
+    background: white; border-radius: 20px; padding: 2rem 1.5rem; text-align: center;
+    border: 2px solid transparent; box-shadow: 0 2px 12px rgba(58,46,30,0.07);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; overflow: hidden;
+  }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--ca, var(--yellow)); }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(58,46,30,0.13); border-color: var(--ca, var(--yellow)); }
+  .card .ci { font-size: 2.8rem; margin-bottom: 1rem; display: block; }
+  .card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--teal); margin-bottom: 0.5rem; }
+  .card p { font-size: 0.86rem; color: #7A6A50; line-height: 1.6; }
+
+  /* INFO STRIP */
+  .info-strip { background: var(--teal); color: white; padding: 3.5rem 2rem; }
+  .info-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; }
+  .info-block h3 { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--yellow); margin-bottom: 0.5rem; }
+  .info-block p, .info-block a { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.85); }
+  .info-block a { color: var(--yellow); text-decoration: none; font-weight: 700; }
+  .info-block a:hover { text-decoration: underline; }
+
+  /* ABOUT */
+  .about-wrap { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-img {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, rgba(242,184,75,0.2), rgba(91,175,196,0.2));
+    border-radius: 24px 4px 24px 4px; border: 3px dashed rgba(42,122,120,0.3);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.75rem; font-size: 0.85rem; color: var(--teal); font-weight: 700; text-align: center; padding: 2rem;
+  }
+  .about-img span { font-size: 3rem; }
+  .about-text .section-title, .about-text .section-label { text-align: left; }
+  .about-text p { font-size: 0.96rem; line-height: 1.75; color: #5A4A32; margin-bottom: 1rem; }
+  .brandi-sig { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--red); margin-top: 0.5rem; }
+
+  /* PROGRAMS */
+  .programs-bg { background: radial-gradient(ellipse at 90% 10%, rgba(242,184,75,0.12) 0%, transparent 45%), radial-gradient(ellipse at 10% 90%, rgba(91,175,196,0.1) 0%, transparent 45%), #FFFEF8; }
+  .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; max-width: 1000px; margin: 0 auto; }
+  .prog-card {
+    background: white; border-radius: 16px; padding: 1.75rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    box-shadow: 0 2px 10px rgba(58,46,30,0.06); border-left: 4px solid var(--pl, var(--orange));
+    transition: transform 0.2s;
+  }
+  .prog-card:hover { transform: translateX(5px); }
+  .prog-card .picon { font-size: 2rem; flex-shrink: 0; }
+  .prog-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--teal); margin-bottom: 0.3rem; }
+  .prog-card p { font-size: 0.84rem; color: #7A6A50; line-height: 1.55; }
+
+  /* FAQ */
+  .faq-wrap { max-width: 700px; margin: 0 auto; }
+  .faq-item { border-bottom: 1.5px solid rgba(42,122,120,0.15); padding: 1.2rem 0; }
+  .faq-q { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--teal); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-weight: 700; }
+  .faq-q .tog { font-size: 1.5rem; color: var(--orange); transition: transform 0.3s; flex-shrink: 0; }
+  .faq-a { font-size: 0.91rem; color: #6A5A3A; line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: 0.75rem; }
+  .faq-item.open .tog { transform: rotate(45deg); }
+
+  /* VISIT CTA */
+  .cta-section { background: var(--red); color: white; text-align: center; padding: 5rem 2rem; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(255,255,255,0.07) 0%, transparent 70%); }
+  .cta-section h2 { font-family: 'Dancing Script', cursive; font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 0.75rem; position: relative; }
+  .cta-section p { font-size: 1rem; opacity: 0.9; max-width: 440px; margin: 0 auto 2rem; line-height: 1.65; position: relative; }
+  .btn-white {
+    background: white; color: var(--red); border: none;
+    padding: 0.85rem 2.2rem; border-radius: 999px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15); transition: transform 0.2s; position: relative;
+  }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background: #2C2012; color: rgba(255,255,255,0.65); padding: 3rem 2rem 1.5rem; text-align: center; }
+  .f-logo { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--yellow); display: block; margin-bottom: 0.25rem; }
+  .f-sub { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.5rem; }
+  .f-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .f-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.2s; }
+  .f-links a:hover { color: var(--yellow); }
+  .f-copy { font-size: 0.7rem; opacity: 0.38; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.25rem; }
+  .f-built { font-size: 0.68rem; opacity: 0.3; margin-top: 0.4rem; }
+
+  @media (max-width: 768px) {
+    nav { flex-wrap: wrap; }
+    .nav-links { gap: 0.8rem; }
+    .about-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="script">Delight</span>
+    <span class="serif">Library</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#offers">What We Offer</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#faq">FAQs</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <div class="nav-hours">Tue–Fri · 9:30–4:30<br><span style="color:var(--teal);font-size:0.68rem;">Closed 12–1 for Lunch</span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Floating decorations -->
+  <span class="hero-deco" style="top:8%;left:7%;font-size:1.6rem;color:var(--yellow);animation-delay:0s;">✦</span>
+  <span class="hero-deco" style="top:14%;left:22%;font-size:1rem;color:var(--yellow);animation-delay:1.2s;">★</span>
+  <span class="hero-deco" style="top:10%;right:18%;font-size:2rem;color:var(--orange);animation-delay:0.5s;">✿</span>
+  <span class="hero-deco" style="top:26%;right:8%;font-size:2rem;color:var(--sky);animation-delay:1.8s;">✾</span>
+  <span class="hero-deco" style="top:40%;left:5%;font-size:1.4rem;color:var(--orange);animation-delay:0.8s;">◆</span>
+  <span class="hero-deco" style="bottom:22%;left:8%;font-size:2rem;animation-delay:2.1s;">🌿</span>
+  <span class="hero-deco" style="bottom:28%;right:11%;font-size:2rem;color:var(--orange);animation-delay:1.4s;">✿</span>
+  <span class="hero-deco" style="bottom:14%;right:22%;font-size:1.4rem;color:var(--yellow);animation-delay:0.3s;">✦</span>
+  <span class="hero-deco" style="bottom:9%;left:26%;font-size:2rem;color:var(--sky);animation-delay:1.7s;">✾</span>
+  <span class="hero-deco" style="top:5%;right:4%;font-size:2.8rem;animation-delay:0.6s;">🌈</span>
+  <span class="hero-deco" style="bottom:7%;right:5%;font-size:2.4rem;animation-delay:1s;">📚</span>
+  <span class="hero-deco" style="top:9%;left:1.5%;font-size:2.2rem;animation-delay:1.5s;">📖</span>
+  <span class="hero-deco" style="top:55%;right:4%;font-size:1rem;color:var(--yellow);animation-delay:2.5s;">★</span>
+
+  <div class="hero-badge">Est. 1948 · Delight, Arkansas</div>
+
+  <h1>
+    <span class="script-line">Delight</span>
+    <span class="serif-line">Library</span>
+  </h1>
+
+  <p class="hero-tagline">Your community's favorite page-turner since 1948.</p>
+  <p class="hero-sub">Books for every age, from board books to bestsellers. Free WiFi, public computers, summer programs, and a librarian who loves what she does.</p>
+
+  <div class="hero-ctas">
+    <a href="#visit" class="btn-primary">Plan Your Visit</a>
+    <a href="#offers" class="btn-secondary">What We Offer</a>
+  </div>
+
+  <div class="hero-hours-pill">
+    🕘 &nbsp; Tue–Fri &nbsp;·&nbsp; 9:30 AM – 4:30 PM &nbsp;·&nbsp; Closed 12–1 PM
+  </div>
+</section>
+
+<div class="wavy">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#ffffff"/>
+  </svg>
+</div>
+
+<!-- WHAT WE OFFER -->
+<section class="section" id="offers" style="background:white;">
+  <div class="section-label">Everything You Need</div>
+  <h2 class="section-title">What We Offer</h2>
+  <p class="section-sub">Whether you're 2 or 92, there's something here for you at Delight Library.</p>
+  <div class="cards-grid">
+    <div class="card" style="--ca:var(--orange);"><span class="ci">📚</span><h3>Books for All Ages</h3><p>Board books for babies, picture books for kids, and adult fiction and nonfiction — our shelves have something for every chapter of life.</p></div>
+    <div class="card" style="--ca:var(--sky);"><span class="ci">🎬</span><h3>DVDs</h3><p>Take home a movie for the evening. We carry a rotating selection of DVDs perfect for family movie night.</p></div>
+    <div class="card" style="--ca:var(--sage);"><span class="ci">💻</span><h3>Public Computer</h3><p>Need to print, check email, or fill out a form? Our public computer is here for you — free of charge.</p></div>
+    <div class="card" style="--ca:var(--yellow);"><span class="ci">📶</span><h3>Free WiFi 24/7</h3><p>Our free WiFi reaches the parking lot and is available around the clock — even when the library is closed.</p></div>
+    <div class="card" style="--ca:var(--red);"><span class="ci">☀️</span><h3>Summer Programs</h3><p>Keep kids reading all summer long with our beloved summer reading programs and special community events.</p></div>
+    <div class="card" style="--ca:var(--teal);"><span class="ci">🏘️</span><h3>Community Hub</h3><p>We're more than a library — we're a gathering place for the people of Delight, Arkansas. Everyone is welcome.</p></div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-inner">
+    <div class="info-block">
+      <h3>Hours</h3>
+      <p>Tuesday – Friday<br>9:30 AM – 4:30 PM<br><em style="color:rgba(255,255,255,0.55);font-size:0.83rem;">Closed for lunch 12:00–1:00 PM</em></p>
+    </div>
+    <div class="info-block">
+      <h3>Find Us</h3>
+      <p>Delight, Arkansas<br><a href="tel:8708268551">(870) 826-8551</a></p>
+    </div>
+    <div class="info-block">
+      <h3>Connect</h3>
+      <p><a href="https://www.facebook.com/people/Delight-Public-Library/100089051981504/" target="_blank">📘 Facebook</a><br><a href="/cdn-cgi/l/email-protection#8de9e8e1e4eae5f9e1e4efffecfff4bfbdbfbfcdeae0ece4e1a3eee2e0">✉️ <span class="__cf_email__" data-cfemail="d3b7b6bfbab4bba7bfbab1a1b2a1aae1e3e1e193b4beb2babffdb0bcbe">[email&#160;protected]</span></a></p>
+    </div>
+    <div class="info-block">
+      <h3>WiFi Is Always On</h3>
+      <p>Free WiFi is available 24/7 — even outside our doors, from the parking lot. No password needed.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about" style="background:var(--cream);">
+  <div class="about-wrap">
+    <div class="about-img">
+      <span>📸</span>
+      <strong>Photo of Brandi Coming Soon</strong>
+      <p style="font-size:0.78rem;font-weight:400;opacity:0.75;">We'll drop Brandi's photo right here!</p>
+    </div>
+    <div class="about-text">
+      <div class="section-label">Meet the Librarian</div>
+      <h2 class="section-title">The Heart Behind the Shelves</h2>
+      <p>Hi, I'm <strong>Brandi Rowton</strong> — and honestly, this library is one of my favorite places on earth. I'm a proud wife to Dalton, mama to four incredible kids (ages 14, 12, 7, and 4), a member of the Delight City Council, and an active part of my church community in Blevins. Life is full and I love every bit of it.</p>
+      <p>I came to this role with years of experience as a librarian's aide — cataloging, shelving, circulation, you name it — but more than anything, I came with a genuine love for people. I believe a small-town library can be so much more than a place to check out books. It can be a hub, a haven, and a place where everyone from the tiniest toddler to the oldest neighbor feels right at home.</p>
+      <p>My passion is fostering a love of literacy, creating programs that bring the community together, and making sure every single person who walks through that door feels welcomed and cared for. Whether you need help finding your next favorite book, a quiet place to sit, or just a friendly face — I'm here for it.</p>
+      <div class="brandi-sig">— Brandi Rowton</div>
+      <p style="font-size:0.78rem;color:var(--teal);margin-top:0.3rem;font-weight:700;">Librarian, Delight Public Library</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section programs-bg" id="programs">
+  <div class="section-label">For All Ages</div>
+  <h2 class="section-title">Programs & Services</h2>
+  <p class="section-sub">From the tiniest readers to lifelong learners — there's always something at Delight Library.</p>
+  <div class="programs-grid">
+    <div class="prog-card" style="--pl:var(--orange);"><span class="picon">👶</span><div><h4>Board Books for Babies</h4><p>A wonderful selection of board books perfect for the littlest hands and biggest imaginations.</p></div></div>
+    <div class="prog-card" style="--pl:var(--yellow);"><span class="picon">☀️</span><div><h4>Summer Reading Program</h4><p>Keep kids engaged and excited about books all summer long with our annual reading program.</p></div></div>
+    <div class="prog-card" style="--pl:var(--teal);"><span class="picon">💻</span><div><h4>Public Computer</h4><p>Job applications, government forms, email — our computer is available for any community need.</p></div></div>
+    <div class="prog-card" style="--pl:var(--sky);"><span class="picon">📶</span><div><h4>24/7 Free WiFi</h4><p>Our signal reaches the parking lot. Students, remote workers, neighbors — connect whenever you need.</p></div></div>
+    <div class="prog-card" style="--pl:var(--red);"><span class="picon">📖</span><div><h4>Adult Fiction & Nonfiction</h4><p>Page-turning thrillers, local history, self-help — we carry a curated collection for grown-up readers too.</p></div></div>
+    <div class="prog-card" style="--pl:var(--sage);"><span class="picon">🎬</span><div><h4>DVD Lending</h4><p>Check out movies for the family. We rotate our selection regularly so there's always something new.</p></div></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:white;">
+  <div class="section-label">Got Questions?</div>
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <p class="section-sub">A few things folks often ask us.</p>
+  <div class="faq-wrap">
+    <div class="faq-item open">
+      <div class="faq-q" onclick="toggleFaq(this)">What are your hours? <span class="tog">+</span></div>
+      <div class="faq-a">We're open Tuesday through Friday, 9:30 AM to 4:30 PM. We close for lunch from 12:00–1:00 PM. We are closed on Saturdays, Sundays, and Mondays.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is there a fee to get a library card? <span class="tog">+</span></div>
+      <div class="faq-a">Library cards are free for residents of the Delight community. Stop in during our hours and Brandi will get you set up!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need to be inside to use the WiFi? <span class="tog">+</span></div>
+      <div class="faq-a">Nope! Our free WiFi is available 24/7 — including from our parking lot. No password needed. It's our gift to the community.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do you have books for young children? <span class="tog">+</span></div>
+      <div class="faq-a">Absolutely! We carry books for every age — from board books for babies all the way through middle grade, young adult, and adult titles.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">When is the summer reading program? <span class="tog">+</span></div>
+      <div class="faq-a">Our summer program runs each summer for school-age children. Check our Facebook page or call us for this year's dates and details!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I use the computer without a library card? <span class="tog">+</span></div>
+      <div class="faq-a">Yes! Our public computer is available to everyone in the community. Just stop in during open hours and ask Brandi for help getting started.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT CTA -->
+<section class="cta-section" id="visit">
+  <span style="font-size:3.5rem;display:block;margin-bottom:0.75rem;position:relative;">📚</span>
+  <h2>Come See Us in Delight!</h2>
+  <p>Whether it's your first visit or your hundredth, you'll always find a warm welcome and a good book waiting for you.</p>
+  <a href="tel:8708268551" class="btn-white">📞 &nbsp; Call Us: (870) 826-8551</a>
+  <br><br>
+  <a href="https://www.facebook.com/people/Delight-Public-Library/100089051981504/" target="_blank" style="color:rgba(255,255,255,0.78);font-size:0.85rem;font-weight:700;text-decoration:none;position:relative;">📘 Follow us on Facebook →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-logo">Delight Library</span>
+  <div class="f-sub">Delight, Arkansas &nbsp;·&nbsp; Est. 1948</div>
+  <div class="f-links">
+    <a href="#about">About</a>
+    <a href="#offers">What We Offer</a>
+    <a href="#programs">Programs</a>
+    <a href="#faq">FAQs</a>
+    <a href="#visit">Visit</a>
+    <a href="https://www.facebook.com/people/Delight-Public-Library/100089051981504/" target="_blank">Facebook</a>
+  </div>
+  <div class="f-copy">© 2025 Delight Public Library · Delight, AR · (870) 826-8551</div>
+  <div class="f-built">Built by <strong style="opacity:0.6;">Delight Digital Designs</strong></div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Fade-in cards on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => {
+          e.target.style.opacity = '1';
+          e.target.style.transform = e.target.classList.contains('prog-card')
+            ? 'translateX(0)' : 'translateY(0)';
+        }, i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.card').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s, border-color 0.25s';
+    obs.observe
